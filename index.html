@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            float: left;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            //  第一列是比较特殊的，直接生成，浮动即可
+            // 后面的所有的图片，都需要通过JS去设置，让他们的排放根据我们的要求来进行排放
+            // 让后面的图片，先找到上一列中最短的那一列，然后在下面进行排放
+
+            // 1.  先找到要操作的对象
+            var container = document.getElementById("container");
+            var boxes = container.children;//页面中所有的子盒子，也就是所有的图片
+
+            // 2. 判断一行可以放多少列  让总宽度/单个盒子的宽度
+            var boxWidth = boxes[0].offsetWidth; // boder+padding+width
+            var pageWidth = window.innerWidth; // 得到页面的宽度
+            // 得到一行可以放置多少列
+            var colunm = Math.floor(pageWidth / boxWidth);//因为一列不能有小数，所以向下取整
+            console.log(colunm);
+
+            // 3. 找到所有的boxes中高度最小的那一个 ，首先得有一个数组放置这些box的高度
+            var arrHeight=[];//存储所有的box的高度
+            for(var i=0;i<boxes.length;i++){
+                if(i<colunm){ // 当盒子的索引小于列数的时候
+                    arrHeight.push(boxes[i].offsetHeight);
+                }else {
+                    var minHeightIndex = getMin(arrHeight).index;//得到高度最小的盒子的索引
+//                    console.log(minHeightIndex);
+                    var minHeightValue = getMin(arrHeight).value;//得到高度最小的盒子的真实高度
+//                    console.log(minHeightValue);
+
+                    var boxLeft = boxes[minHeightIndex].offsetLeft;//得到高度最小盒子的左侧距离
+//                    var boxTop = boxes[minHeightIndex].offsetHeight;//得到高度最小盒子的高度
+                    boxes[i].style.position ="absolute";//先设置定位
+                    boxes[i].style.left = boxLeft + 'px';
+                    boxes[i].style.top = minHeightValue+'px';
+
+                    // 更新盒子中存储的高度  arrHeight存储的就是第一列中每个盒子的高度
+                    arrHeight[minHeightIndex] =minHeightValue+boxes[i].offsetHeight;
+                    console.log(arrHeight[minHeightIndex]);
+                }
+            }
+
+            console.log(arrHeight);
+            // 求第一行中，高度最小的那个盒子
+            // 4. 判断触底
+
+        }
+
+        function getMin(arr){
+            // 假设最小值 就是数组中的第一项
+            arr[0];
+            // 调用一个函数，需要拿到两个数值  又可以用对象
+            var obj = {};
+            obj.index = 0;
+            obj.value = arr[0];//假设最小值就是数组的第一项，这个Value是obj的一个属性
+            for(var i=1;i<arr.length;i++){
+                if(obj.value>arr[i]){
+                    obj.value= arr[i];
+                    obj.index = i;
+                }
+            }
+            return obj;//返回这个对象
+        }
+    </script>
+</head>
+<body>
+<div id="container">
+    <!--(.box>img[src="images/P_00$.jpg"])*9-->
+    <div class="box"><img src="images/P_000.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_001.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_002.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_003.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_004.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_005.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_006.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_007.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_008.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_009.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_000.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_001.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_002.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_003.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_004.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_005.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_006.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_007.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_008.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_009.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_000.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_001.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_002.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_003.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_004.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_005.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_006.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_007.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_008.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_009.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_000.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_001.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_002.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_003.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_004.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_005.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_006.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_007.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_008.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_009.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_000.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_001.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_002.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_003.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_004.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_005.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_006.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_007.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_008.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_009.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_000.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_001.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_002.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_003.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_004.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_005.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_006.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_007.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_008.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_009.jpg" alt=""/></div><div class="box"><img src="images/P_000.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_001.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_002.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_003.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_004.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_005.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_006.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_007.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_008.jpg" alt=""/></div>
+    <div class="box"><img src="images/P_009.jpg" alt=""/></div>
+
+</div>
+</body>
+</html>
